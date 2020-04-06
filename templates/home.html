@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %} Home {%  endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-5 offset-md-3">
+        <div class="jumbotron">
+            <h2>Welcome</h2>
+        
+            {% if session['name'] %}
+            <p>You login as {{ session['name'] }}</p>
+            {% else %}
+            <p>Not login yet</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
