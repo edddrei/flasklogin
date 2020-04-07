@@ -69,11 +69,8 @@ def login():
 
 @app.route('/contacts')
 def contactss():
-    #cursor me permite ejecutar las conusltas de mysql
     cur = mysql.connection.cursor()
-    #Trae los datos 
     cur.execute('SELECT * FROM contacts')
-    #ejecutar la consulta y obtener todos los datos
     data = cur.fetchall()
     return render_template("contacts.html", contacts = data)
 
@@ -85,13 +82,9 @@ def add_contact():
         phone = request.form['phone']
         email = request.form['email']
 
-        #cursor me permite ejecutar las conusltas de mysql
         cur = mysql.connection.cursor()
-        #consulta para insertar un nuevo dato
         cur.execute('INSERT INTO contacts (fullname,phone,email) VALUES (%s, %s, %s)',(fullname,phone,email))
-        #funcion para ejecutar la consulta
         mysql.connection.commit()
-        #envia un mensaje flash
         flash('Contact added successfully')
         return redirect(url_for('contactss'))
 
@@ -118,19 +111,15 @@ def update_contact(id):
                 phone = %s
             WHERE id = %s
         """, (fullname, email, phone, id))
-        #funcion para ejecutar la consulta
         mysql.connection.commit()
         flash('Contact Update Successfully')
         return redirect(url_for('contactss'))
 
 #DELETE
-@app.route('/delete/<string:id>') #recibe una ruta con un id
-def delete_contact(id): #recibe ese id
-    #conexion
+@app.route('/delete/<string:id>') 
+def delete_contact(id): 
     cur = mysql.connection.cursor()
-    #borra el id que se le esta pasando
     cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
-    #funcion para ejecutar la consulta
     mysql.connection.commit()
     flash('Contact Removed Successfully')
     return redirect(url_for('contactss'))
